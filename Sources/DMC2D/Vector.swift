@@ -3,6 +3,11 @@ import Foundation
 public struct Vector: Equatable {
     public private(set) var x: Double
     public private(set) var y: Double
+    
+    public init(x: Double, y: Double) {
+        self.x = x
+        self.y = y
+    }
 
     public func magSqr() -> Double {
         return x * x + y * y

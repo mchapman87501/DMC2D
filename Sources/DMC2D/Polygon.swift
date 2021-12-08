@@ -45,7 +45,7 @@ public struct Polygon {
             return result
         }
 
-        func asVector() -> Vector {
+        public func asVector() -> Vector {
             return Vector(x: Double(pf.x - p0.x), y: Double(pf.y - p0.y))
         }
     }
@@ -88,7 +88,7 @@ public struct Polygon {
 
      }
      */
-    func contains(point: CGPoint) -> Bool {
+    public func contains(point: CGPoint) -> Bool {
         if bbox.contains(point) {
             let x0 = point.x
             let y0 = point.y
@@ -106,11 +106,11 @@ public struct Polygon {
         return false
     }
 
-    func contains(x: Double, y: Double) -> Bool {
+    public func contains(x: Double, y: Double) -> Bool {
         return contains(point: CGPoint(x: x, y: y))
     }
 
-    func contains(x: Int, y: Int) -> Bool {
+    public func contains(x: Int, y: Int) -> Bool {
         return contains(x: Double(x), y: Double(y))
     }
 
