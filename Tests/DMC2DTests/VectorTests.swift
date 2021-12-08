@@ -8,6 +8,12 @@ class VectorTests: XCTestCase {
         let zeroUnit = Vector().unit()
         XCTAssertEqual(zeroUnit.magnitude(), 0.0)
     }
+    
+    func testInitCGPoint() throws {
+        let v = Vector(CGPoint(x: 10.0, y: 10.0))
+        XCTAssertEqual(v.x, 10.0)
+        XCTAssertEqual(v.y, 10.0)
+    }
 
     func testAngle() throws {
         for degrees in [
