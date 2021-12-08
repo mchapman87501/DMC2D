@@ -51,7 +51,7 @@ public struct Polygon {
     }
 
     public let vertices: [CGPoint]
-    private let vertexVectors: [Vector]
+    public let vertexVectors: [Vector]
 
     public let edges: [Segment]
     public let edgeNormals: [Vector]
@@ -160,5 +160,21 @@ extension Polygon {
 
     public init(_ verticesIn: [(Double, Double)]) {
         self.init(verticesIn.map { CGPoint(x: $0, y: $1) })
+    }
+}
+
+extension Polygon {
+    public func nearestVertex(to point: Vector) -> Vector {
+        // TODO learn to do this more efficiently - voronoi
+        var result = Vector()
+        var minDist = 0.0
+        for (i, v) in vertexVectors.enumerated() {
+            let distSqr = (v - point).magSqr()
+            if (i == 0) || (distSqr < minDist) {
+                result = v
+                minDist = distSqr
+            }
+        }
+        return result
     }
 }
