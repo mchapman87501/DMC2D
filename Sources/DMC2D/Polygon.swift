@@ -45,13 +45,13 @@ public struct Polygon {
             return result
         }
 
-        func asVector() -> Vector {
+        public func asVector() -> Vector {
             return Vector(x: Double(pf.x - p0.x), y: Double(pf.y - p0.y))
         }
     }
 
     public let vertices: [CGPoint]
-    private let vertexVectors: [Vector]
+    public let vertexVectors: [Vector]
 
     public let edges: [Segment]
     public let edgeNormals: [Vector]
@@ -88,7 +88,7 @@ public struct Polygon {
 
      }
      */
-    func contains(point: CGPoint) -> Bool {
+    public func contains(point: CGPoint) -> Bool {
         if bbox.contains(point) {
             let x0 = point.x
             let y0 = point.y
@@ -106,11 +106,11 @@ public struct Polygon {
         return false
     }
 
-    func contains(x: Double, y: Double) -> Bool {
+    public func contains(x: Double, y: Double) -> Bool {
         return contains(point: CGPoint(x: x, y: y))
     }
 
-    func contains(x: Int, y: Int) -> Bool {
+    public func contains(x: Int, y: Int) -> Bool {
         return contains(x: Double(x), y: Double(y))
     }
 
@@ -160,5 +160,21 @@ extension Polygon {
 
     public init(_ verticesIn: [(Double, Double)]) {
         self.init(verticesIn.map { CGPoint(x: $0, y: $1) })
+    }
+}
+
+extension Polygon {
+    public func nearestVertex(to point: Vector) -> Vector {
+        // TODO learn to do this more efficiently - voronoi
+        var result = Vector()
+        var minDist = 0.0
+        for (i, v) in vertexVectors.enumerated() {
+            let distSqr = (v - point).magSqr()
+            if (i == 0) || (distSqr < minDist) {
+                result = v
+                minDist = distSqr
+            }
+        }
+        return result
     }
 }
