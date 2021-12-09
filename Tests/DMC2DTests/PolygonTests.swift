@@ -46,4 +46,18 @@ class PolygonTests: XCTestCase {
         let poly = getPoly()
         XCTAssert(poly.contains(x: 10.0, y: 9.0))
     }
+
+    func testNearestVertex(toX x: Double, y: Double, expX: Double, expY: Double)
+    {
+        let poly = getPoly()
+        let actual = poly.nearestVertex(to: Vector(x: x, y: y))
+        XCTAssertEqual(actual.x, expX, "Expected x offset")
+        XCTAssertEqual(actual.y, expY, "Expected y offset")
+    }
+
+    func testNearestVertex() throws {
+        testNearestVertex(toX: 0.0, y: -5.0, expX: 0.0, expY: -5.0)
+        testNearestVertex(toX: 9.0, y: -9.8, expX: 10.0, expY: -10.0)
+        testNearestVertex(toX: 11.0, y: -10.8, expX: 10.0, expY: -10.0)
+    }
 }

@@ -9,6 +9,19 @@ class VectorTests: XCTestCase {
         XCTAssertEqual(zeroUnit.magnitude(), 0.0)
     }
 
+    func testUnit() throws {
+        let x = -201.45
+        let y = 42.0
+        let v = Vector(x: x, y: y)
+        let unit = v.unit()
+
+        let actualAngle = unit.angle()
+        XCTAssertEqual(actualAngle, unit.angle())
+        XCTAssertEqual(actualAngle, v.angle())
+
+        XCTAssertEqual(unit.magnitude(), 1.0)
+    }
+
     func testInitCGPoint() throws {
         let v = Vector(CGPoint(x: 10.0, y: 10.0))
         XCTAssertEqual(v.x, 10.0)
@@ -33,6 +46,35 @@ class VectorTests: XCTestCase {
         }
     }
 
+    func testDistSqr() throws {
+        let v1 = Vector(x: 1.0, y: 2.0)
+
+        XCTAssertEqual(v1.distSqr(v1), 0.0)
+        XCTAssertEqual(v1.distSqr(Vector()), v1.magSqr())
+    }
+
+    func testDotParallel() throws {
+        let v1 = Vector(x: 1.0, y: 2.0)
+        let expected = 5.0
+        let actual = v1.dot(v1)
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testDotOrtho() throws {
+        let v1 = Vector(x: 3.5, y: -12.2)
+        let v1n = v1.normal()
+
+        XCTAssertEqual(v1.dot(v1n), 0.0)
+    }
+
+    func testDot() throws {
+        let v1 = Vector(x: 5.0, y: 0.0)
+        let v2 = Vector(x: 5.0, y: -4.0)
+        let actual = v1.dot(v2)
+        let expected = 25.0
+        XCTAssertEqual(actual, expected)
+    }
+
     func testCGPoint() throws {
         let vx = -7.0
         let vy = 1.2
@@ -53,6 +95,15 @@ class VectorTests: XCTestCase {
         XCTAssertEqual(v3.magnitude(), 0.0)
     }
 
+    func testMinus() throws {
+        let v1 = Vector(x: -1.0, y: 1.0)
+        let v2 = Vector(x: 1.0, y: -1.0)
+
+        let v3 = v1 - v2
+        XCTAssertEqual(v3.x, -2.0)
+        XCTAssertEqual(v3.y, 2.0)
+    }
+
     func testPlusEquals() throws {
         let v1 = Vector(x: -1.0, y: 1.0)
         var v2 = Vector(x: 1.0, y: -1.0)
@@ -63,6 +114,18 @@ class VectorTests: XCTestCase {
         XCTAssertEqual(v2.y, 1.0)
         XCTAssertEqual(v2.magSqr(), 2.0)
         XCTAssertEqual(v2.magnitude(), sqrt(2.0))
+    }
+
+    func testMinusEquals() throws {
+        let v1 = Vector(x: -1.0, y: 1.0)
+        var v2 = Vector(x: 1.0, y: -1.0)
+        v2 -= v1
+        v2 -= v1
+
+        XCTAssertEqual(v2.x, 3.0)
+        XCTAssertEqual(v2.y, -3.0)
+        XCTAssertEqual(v2.magSqr(), 18.0)
+        XCTAssertEqual(v2.magnitude(), sqrt(18.0))
     }
 
     func testScalarMultiply() throws {
