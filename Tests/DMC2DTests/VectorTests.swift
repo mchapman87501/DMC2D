@@ -8,7 +8,7 @@ class VectorTests: XCTestCase {
         let zeroUnit = Vector().unit()
         XCTAssertEqual(zeroUnit.magnitude(), 0.0)
     }
-    
+
     func testInitCGPoint() throws {
         let v = Vector(CGPoint(x: 10.0, y: 10.0))
         XCTAssertEqual(v.x, 10.0)
@@ -41,51 +41,51 @@ class VectorTests: XCTestCase {
         XCTAssertEqual(point.x, vx)
         XCTAssertEqual(point.y, vy)
     }
-    
+
     func testPlus() throws {
         let v1 = Vector(x: -1.0, y: 1.0)
         let v2 = Vector(x: 1.0, y: -1.0)
-        
+
         let v3 = v1 + v2
         XCTAssertEqual(v3.x, 0.0)
         XCTAssertEqual(v3.y, 0.0)
-        
+
         XCTAssertEqual(v3.magnitude(), 0.0)
     }
-    
+
     func testPlusEquals() throws {
         let v1 = Vector(x: -1.0, y: 1.0)
         var v2 = Vector(x: 1.0, y: -1.0)
         v2 += v1
         v2 += v1
-        
+
         XCTAssertEqual(v2.x, -1.0)
         XCTAssertEqual(v2.y, 1.0)
         XCTAssertEqual(v2.magSqr(), 2.0)
         XCTAssertEqual(v2.magnitude(), sqrt(2.0))
     }
-    
+
     func testScalarMultiply() throws {
         let v = Vector(x: 1.0, y: 4.0)
         let vs = v * 3.0
         XCTAssertEqual(vs.x, 3.0)
         XCTAssertEqual(vs.y, 12.0)
     }
-    
+
     func testScalarDivide() throws {
         let v = Vector(x: 1.0, y: 4.0)
         let vs = v / 4.0
         XCTAssertEqual(vs.x, 0.25)
         XCTAssertEqual(vs.y, 1.0)
     }
-    
+
     func testScalarDivideByZero() throws {
         let v = Vector(x: 1.0, y: 4.0)
         let vs = v / 0.0
         XCTAssertTrue(vs.x.isInfinite)
         XCTAssertTrue(vs.y.isInfinite)
     }
-    
+
     func testMagnitudeBC() throws {
         let v = Vector(x: sqrt(-1.0), y: 0.0)
         XCTAssertTrue(v.magSqr().isNaN)

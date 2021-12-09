@@ -3,6 +3,6 @@
 /.swiftpm
 /Packages
 /*.xcodeproj
+/test_coverage.json
 xcuserdata/
 DerivedData/
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata

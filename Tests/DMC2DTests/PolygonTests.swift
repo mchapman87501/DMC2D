@@ -4,14 +4,13 @@ import XCTest
 
 typealias Polygon = DMC2D.Polygon
 
-
 class PolygonTests: XCTestCase {
     func getPoly() -> Polygon {
         return Polygon([
             (0.0, -5.0), (10.0, -10.0), (20.0, 0.0), (10.0, 10.0), (0.0, 5.0),
         ])
     }
-    
+
     func testBBox() throws {
         let poly = getPoly()
         XCTAssertEqual(poly.bbox.origin.x, 0.0)
@@ -19,10 +18,10 @@ class PolygonTests: XCTestCase {
         XCTAssertEqual(poly.bbox.size.width, 20.0)
         XCTAssertEqual(poly.bbox.size.height, 20.0)
     }
-    
+
     func testContains1() throws {
         let poly = getPoly()
-        
+
         func contains(_ x: Double, _ y: Double) -> Bool {
             return poly.contains(x: x, y: y)
         }
@@ -37,7 +36,7 @@ class PolygonTests: XCTestCase {
         XCTAssert(contains(9.999, 9.8))
         XCTAssert(contains(5.0, 7.0))
     }
-    
+
     func testContainsXYInt() throws {
         let poly = getPoly()
         XCTAssert(poly.contains(x: 10, y: 9))

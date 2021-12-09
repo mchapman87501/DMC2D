@@ -3,7 +3,7 @@ import Foundation
 public struct Vector: Equatable {
     public private(set) var x: Double
     public private(set) var y: Double
-    
+
     public init(x: Double, y: Double) {
         self.x = x
         self.y = y
@@ -57,11 +57,11 @@ extension Vector {
     public static func * (_ v: Vector, _ s: Double) -> Vector {
         return Vector(x: v.x * s, y: v.y * s)
     }
-    
+
     public static func / (_ v: Vector, _ s: Double) -> Vector {
         return Vector(x: v.x / s, y: v.y / s)
     }
-    
+
     public static func += (_ v1: inout Vector, _ v2: Vector) {
         v1.x += v2.x
         v1.y += v2.y
