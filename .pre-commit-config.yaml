@@ -3,4 +3,4 @@ repos:
     rev: 0.45.1
     hooks:
       - id: swiftlint
-
+        args: [--strict]
