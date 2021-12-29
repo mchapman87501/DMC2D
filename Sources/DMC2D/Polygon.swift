@@ -7,7 +7,7 @@ public struct Polygon {
         public let pf: CGPoint
 
         func crossesUpward(_ y: CGFloat) -> Bool {
-            return (
+            (
                 // Upward, non-horizontal edge.
                 (p0.y < pf.y)
                 // Upward crossing includes segment start,
@@ -16,7 +16,7 @@ public struct Polygon {
         }
 
         func crossesDownward(_ y: CGFloat) -> Bool {
-            return (
+            (
                 // Downward, non-horizontal edge.
                 (p0.y > pf.y)
                 // Downward crossing excludes segment start, includes
@@ -46,7 +46,7 @@ public struct Polygon {
         }
 
         public func asVector() -> Vector {
-            return Vector(x: Double(pf.x - p0.x), y: Double(pf.y - p0.y))
+            Vector(x: Double(pf.x - p0.x), y: Double(pf.y - p0.y))
         }
     }
 
@@ -107,11 +107,11 @@ public struct Polygon {
     }
 
     public func contains(x: Double, y: Double) -> Bool {
-        return contains(point: CGPoint(x: x, y: y))
+        contains(point: CGPoint(x: x, y: y))
     }
 
     public func contains(x: Int, y: Int) -> Bool {
-        return contains(x: Double(x), y: Double(y))
+        contains(x: Double(x), y: Double(y))
     }
 
     private static func getEdges(_ vertices: [CGPoint]) -> [Segment] {
@@ -132,7 +132,7 @@ public struct Polygon {
 
 extension Polygon {
     public init(_ verticesIn: [CGPoint]) {
-        var bb = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        var bb = CGRect.zero
         var first = true
         for v in verticesIn {
             if first {
@@ -152,8 +152,8 @@ extension Polygon {
         vertexVectors = vertices.map { v in
             Vector(x: Double(v.x), y: Double(v.y))
         }
-        edges = Polygon.getEdges(verticesIn)
-        edgeNormals = Polygon.getEdgeNormals(edges)
+        edges = Self.getEdges(verticesIn)
+        edgeNormals = Self.getEdgeNormals(edges)
         bbox = bb
         center = CGPoint(x: xMean, y: yMean)
     }
@@ -165,7 +165,6 @@ extension Polygon {
 
 extension Polygon {
     public func nearestVertex(to point: Vector) -> Vector {
-        // TODO learn to do this more efficiently - voronoi
         var result = Vector()
         var minDist = 0.0
         for (i, v) in vertexVectors.enumerated() {

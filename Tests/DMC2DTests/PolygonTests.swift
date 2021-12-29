@@ -5,9 +5,9 @@ import XCTest
 typealias Polygon = DMC2D.Polygon
 
 class PolygonTests: XCTestCase {
-    func getPoly() -> Polygon {
-        return Polygon([
-            (0.0, -5.0), (10.0, -10.0), (20.0, 0.0), (10.0, 10.0), (0.0, 5.0),
+    private func getPoly() -> Polygon {
+        Polygon([
+            (0.0, -5.0), (10.0, -10.0), (20.0, 0.0), (10.0, 10.0), (0.0, 5.0)
         ])
     }
 
@@ -23,7 +23,7 @@ class PolygonTests: XCTestCase {
         let poly = getPoly()
 
         func contains(_ x: Double, _ y: Double) -> Bool {
-            return poly.contains(x: x, y: y)
+            poly.contains(x: x, y: y)
         }
 
         // Crossing counts are fragile when the point lies near one of the
@@ -47,8 +47,7 @@ class PolygonTests: XCTestCase {
         XCTAssert(poly.contains(x: 10.0, y: 9.0))
     }
 
-    func testNearestVertex(toX x: Double, y: Double, expX: Double, expY: Double)
-    {
+    private func testNearestVertex(toX x: Double, y: Double, expX: Double, expY: Double) {
         let poly = getPoly()
         let actual = poly.nearestVertex(to: Vector(x: x, y: y))
         XCTAssertEqual(actual.x, expX, "Expected x offset")

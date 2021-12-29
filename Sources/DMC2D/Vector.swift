@@ -10,7 +10,7 @@ public struct Vector: Equatable {
     }
 
     public func magSqr() -> Double {
-        return x * x + y * y
+        x * x + y * y
     }
 
     public func distSqr(_ other: Vector) -> Double {
@@ -20,7 +20,7 @@ public struct Vector: Equatable {
     }
 
     public func magnitude() -> Double {
-        return sqrt(magSqr())
+        sqrt(magSqr())
     }
 
     public func unit() -> Vector {
@@ -33,33 +33,33 @@ public struct Vector: Equatable {
     }
 
     public func dot(_ v: Vector) -> Double {
-        return x * v.x + y * v.y
+        x * v.x + y * v.y
     }
 
     public func normal() -> Vector {
-        return Vector(x: -y, y: x)
+        Vector(x: -y, y: x)
     }
 
     public func angle() -> Double {
-        return atan2(self.y, self.x)
+        atan2(self.y, self.x)
     }
 }
 
 extension Vector {
     public static func + (_ v1: Vector, _ v2: Vector) -> Vector {
-        return Vector(x: v1.x + v2.x, y: v1.y + v2.y)
+        Vector(x: v1.x + v2.x, y: v1.y + v2.y)
     }
 
     public static func - (_ v1: Vector, _ v2: Vector) -> Vector {
-        return Vector(x: v1.x - v2.x, y: v1.y - v2.y)
+        Vector(x: v1.x - v2.x, y: v1.y - v2.y)
     }
 
     public static func * (_ v: Vector, _ s: Double) -> Vector {
-        return Vector(x: v.x * s, y: v.y * s)
+        Vector(x: v.x * s, y: v.y * s)
     }
 
     public static func / (_ v: Vector, _ s: Double) -> Vector {
-        return Vector(x: v.x / s, y: v.y / s)
+        Vector(x: v.x / s, y: v.y / s)
     }
 
     public static func += (_ v1: inout Vector, _ v2: Vector) {

@@ -3,7 +3,6 @@ import XCTest
 @testable import DMC2D
 
 class VectorTests: XCTestCase {
-
     func testZeroUnit() throws {
         let zeroUnit = Vector().unit()
         XCTAssertEqual(zeroUnit.magnitude(), 0.0)
@@ -30,7 +29,7 @@ class VectorTests: XCTestCase {
 
     func testAngle() throws {
         for degrees in [
-            0.0, 10.0, 30.0, 45.0, 90.0, 132.3, 245.0, 281.3, 301.4,
+            0.0, 10.0, 30.0, 45.0, 90.0, 132.3, 245.0, 281.3, 301.4
         ] {
             let rads = degrees * .pi / 180.0
             let r = 3.1
