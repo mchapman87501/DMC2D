@@ -178,7 +178,7 @@ only_rules:
   # - todo
   - toggle_bool
   - trailing_closure
-  - trailing_comma
+  #- trailing_comma
   - trailing_newline
   - trailing_semicolon
   - trailing_whitespace

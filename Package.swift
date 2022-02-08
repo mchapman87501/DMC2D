@@ -27,6 +27,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "DMC2DTests",
-            dependencies: ["DMC2D"])
+            dependencies: ["DMC2D"]),
     ]
 )
