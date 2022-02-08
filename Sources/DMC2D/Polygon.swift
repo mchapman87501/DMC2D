@@ -1,9 +1,16 @@
 import CoreGraphics
 import Foundation
 
+/// Represents a polygon defined by a sequence of vertices.
+///
+/// This code has been tested only with convex polygons whose vertices are specified in clockwise order.
 public struct Polygon {
+    /// Represents a polygon edge.
     public struct Segment {
+        /// The first endpoint of the segment
         public let p0: CGPoint
+
+        /// The second endpoint of the segment
         public let pf: CGPoint
 
         func crossesUpward(_ y: CGFloat) -> Bool {
@@ -45,22 +52,37 @@ public struct Polygon {
             return result
         }
 
+        /// Get a representation of the segment as a vector.
+        /// - Returns: a vector representing the offset from the segment's starting point `p0` to its end point `pf`
         public func asVector() -> Vector {
             Vector(x: Double(pf.x - p0.x), y: Double(pf.y - p0.y))
         }
     }
 
+    /// The polygon's vertices
     public let vertices: [CGPoint]
+
+    /// The polygon's vertices, represented as vectors rather than as CGPoints.
     public let vertexVectors: [Vector]
 
+    /// The polygon's edges.
+    ///
+    /// Each edge is a `Segment`.  `edges[0]` extends from `vertices[0]` to `vertices[1]`, and so on.
     public let edges: [Segment]
+
+    /// The normal vectors for each of the polygon's edges.
+    ///
+    /// `edgeNormals[i]` is the normal vector
+    /// for `edges[i]`.  It has a positive y component if `edges[i].pf.x`
+    /// &ge; `edges[i].p0.x`, and a non-positive y component otherwise.
     public let edgeNormals: [Vector]
+
+    /// The bounding box of the polygon
     public let bbox: CGRect
+
+    /// The center point of the polygon, computed as the average of the polygon's vertices
     public let center: CGPoint  // Geometric center, sort of.
 
-    // Find out whether a point lies on or within the boundaries of self.
-    // This algorithm avoids a host of boundary conditions:
-    // http://geomalgorithms.com/a03-_inclusion.html
     /*
      Edge Crossing Rules
 
@@ -88,6 +110,12 @@ public struct Polygon {
 
      }
      */
+    /// Find out whether a point lies on or within the boundaries of this polygon.
+    ///
+    /// This method is based on the "Point in Polygon" algorithm that was once described at
+    /// [GeomAlgorithms](http://www.geomalgorithms.com/algorithms.html).  That website is now available as a book.
+    /// - Parameter point: a point to be checked
+    /// - Returns: `true` if `point` lies on or within the boundary of `self`, `false` otherwise
     public func contains(point: CGPoint) -> Bool {
         if bbox.contains(point) {
             let x0 = point.x
@@ -106,10 +134,28 @@ public struct Polygon {
         return false
     }
 
+    /// Find out whether a point defined by `Double` coordinates lies on/within the boundaries of this
+    /// polygon.
+    ///
+    /// See ``contains(point:)`` for more info.
+    ///
+    /// - Parameters:
+    ///   - x: x coordinate of the point
+    ///   - y: y coordinate of the point
+    /// - Returns: whether or not the point `(x, y)` lies on or within the boundaries of this polygon
     public func contains(x: Double, y: Double) -> Bool {
         contains(point: CGPoint(x: x, y: y))
     }
 
+    /// Find out whether a point defined by `Int` coordinates lies on/within the boundaries of this
+    /// polygon.
+    ///
+    /// See ``contains(point:)`` for more info.
+    ///
+    /// - Parameters:
+    ///   - x: x coordinate of the point
+    ///   - y: y coordinate of the point
+    /// - Returns: whether or not the point `(x, y)` lies on or within the boundaries of this polygon
     public func contains(x: Int, y: Int) -> Bool {
         contains(x: Double(x), y: Double(y))
     }
@@ -131,6 +177,12 @@ public struct Polygon {
 }
 
 extension Polygon {
+    /// Construct a polygon from an array of `CGPoint`s.
+    ///
+    /// _**Caveat:**_  the underlying code has been tested only with convex polygons, and only with
+    /// vertices that have been ordered clockwise, starting from the vertex with the minimum x coordinate.
+    ///
+    /// - Parameter verticesIn: vertices of the polygon
     public init(_ verticesIn: [CGPoint]) {
         var bb = CGRect.zero
         var first = true
@@ -158,12 +210,20 @@ extension Polygon {
         center = CGPoint(x: xMean, y: yMean)
     }
 
+    /// Construct a polygon from an array of `(x, y)` points.
+    ///
+    /// See  the CGPoint overload of `init(_:)` for caveats.
+    ///
+    /// - Parameter verticesIn: vertices of the polygon
     public init(_ verticesIn: [(Double, Double)]) {
         self.init(verticesIn.map { CGPoint(x: $0, y: $1) })
     }
 }
 
 extension Polygon {
+    /// Find the offset from a given point to the polygon vertex nearest to that point.
+    /// - Parameter point: the point for which to find the nearest vertex
+    /// - Returns: a ``Vector`` representing the displacement from `point` to the nearest vertex of this polygon
     public func nearestVertex(to point: Vector) -> Vector {
         var result = Vector()
         var minDist = 0.0
